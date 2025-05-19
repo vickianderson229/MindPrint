@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MindPrint Essay Checker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background-color: #f4f4f4;
+    }
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    textarea {
+      width: 100%;
+      height: 200px;
+      padding: 1rem;
+      font-size: 1rem;
+    }
+    button {
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      margin-top: 1rem;
+      cursor: pointer;
+    }
+    .result {
+      margin-top: 2rem;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>MindPrint Essay Checker</h1>
+    <p>Paste your student's essay below:</p>
+    <textarea id="essayInput" placeholder="Paste essay here..."></textarea>
+    <br>
+    <button onclick="checkEssay()">Check Essay</button>
+    <div class="result" id="resultBox"></div>
+  </div>
+
+  <script>
+    function checkEssay() {
+      const essay = document.getElementById('essayInput').value;
+      const resultBox = document.getElementById('resultBox');
+
+      if (!essay.trim()) {
+        resultBox.innerText = "Please paste an essay to check.";
+        return;
+      }
+
+      let score = 0;
+      if (essay.includes("ChatGPT") || essay.includes("AI")) score += 1;
+      if (essay.length > 500) score += 1;
+      if ((essay.match(/\bthe\b/gi) || []).length > 20) score += 1;
+
+      if (score >= 2) {
+        resultBox.innerText = "⚠️ This essay may have AI-generated features. Review carefully.";
+      } else {
+        resultBox.innerText = "✅ This essay appears to be written by a student.";
+      }
+    }
+  </script>
+</body>
+</html>
